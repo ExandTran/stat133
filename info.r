@@ -1,0 +1,5 @@
+name = "Alex Tran"
+SID = "25193608"
+email = "name@berkeley.edu"
+github_name = "ExandTran"
+status = "enrolled"
