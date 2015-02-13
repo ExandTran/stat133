@@ -233,7 +233,7 @@ points(x=SO2012Ctry$pop[SO2012Ctry$Total==0],y=SO2012Ctry$GDP_per_person[SO2012C
 top5=order(-SO2012Ctry$Total)[1:5]
 symbols(x=SO2012Ctry[SO2012Ctry$Total>0,'pop'],y=SO2012Ctry[SO2012Ctry$Total>0,'GDP_per_person'],circles=(SO2012Ctry[SO2012Ctry$Total>0,'Total'])^2,xlim=c(1e4,1e10), ylim=c(10,1e7), log='xy', xlab='Population', ylab='GDP Per Person', main='2012 Summer Olympics')
 points(x=SO2012Ctry$pop[SO2012Ctry$Total==0],y=SO2012Ctry$GDP_per_person[SO2012Ctry$Total==0],pch='.')
-text(x=SO2012Ctry$pop[top5],y=SO2012Ctry$GDP_per_person[top5], labels=SO2012Ctry$Country[top5],cex=.5)
+text(x=SO2012Ctry$pop[top5],y=SO2012Ctry$GDP_per_person[top5], labels=SO2012Ctry$Country[top5],cex=.5,srt=90)
 ######################################
 # PLOT 3.
 # Plotting points on maps can help us see geographic relationships
