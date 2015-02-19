@@ -12,10 +12,10 @@
 # First of all you need to install the ggplot2 package.
 # You only need to do that once, so the install command is commented out 
 # here to make sure you don't run it multiple times but make sure to install it once:
-# install.packages("ggplot2")
+install.packages("ggplot2")
 library("ggplot2")
 # And one more package:
-# install.packages("plyr")
+install.packages("plyr")
 library("plyr")
 
 # Before getting started you should aquaint yourself with the ggplot2 package.
@@ -70,18 +70,18 @@ load("WR1500MeterMen.rda")
 # Q1a. How many world records does this data frame contain?
 #
 # n.wr <- your code here
-
+n.wr=nrow(wr1500m)
 # Q1b. Use R commands to find out who currently holds the world
 # record in the men's 1500 meter.
  
 # wr.name <- your code here
-
+wr.name=levels(factor(wr1500m[which.min(wr1500m$times),'athlete']))
 # Let's look at the relationship between date and time.
 # Q1c. What type of variable (numeric (continuous or discrete), nominal ordinal)
 # are year and times? (no need to use R code to answer this question)
 
-### year : discrete
-### times : continuous
+year : discrete
+times : continuous
 
 # When we are examining a variable to see how it changes in time,
 # we typically make a line plot, with time on the x-axes and 
@@ -97,8 +97,9 @@ load("WR1500MeterMen.rda")
 # wr1500m <- your code here
 
 # Your ggplot / qplot command:
-
-
+times_sec=wr1500m$times+180
+wr1500m$times_sec=times_sec
+qplot(year,times_sec,data=wr1500m,geom='step')
 # Q2b. Redo the plot using a date that incorporates the month as 
 # well as the year. For example, in Sep 1904 the world record 
 # was broken by James Lightbody. Use a date of 1904.75 for this
@@ -111,6 +112,10 @@ load("WR1500MeterMen.rda")
 # wr1500m <- your code here
 
 # Your qplot command:
+wr1500m[1,2]=6
+new_year=wr1500m$year+(wr1500m$month)/12
+wr1500m$new_year=new_year
+qplot(new_year,times_sec,data=wr1500m, geom='step')
 
 
 # Q3. The current world record was set in 1998. If we want to
@@ -123,6 +128,9 @@ load("WR1500MeterMen.rda")
 # wr_1998 <- your code here
 
 # Your ggplot command:
+wr_1998=wr1500m[,'times_sec'][which.min(wr1500m[,'times_sec'])]
+ggplot(wr1500m,aes(new_year,times_sec))+geom_step()+ geom_segment(x = 1998.583, xend = 2015, y = wr_1998, yend = wr_1998)
+
 
 # Q4. There are two times where the record stood for several
 # years - in 1944 and 1998. Let's make it easier to see these
@@ -139,12 +147,15 @@ load("WR1500MeterMen.rda")
 # wr_1944 <- your code here
 
 # Your ggplot command
-
+wr_1944_name=levels(factor(wr1500m[,'athlete'][match(1944,wr1500m[,'year'])]))
+wr_1998_name=levels(factor(wr1500m[,'athlete'][match(1998,wr1500m[,'year'])]))
+ggplot(wr1500m,aes(new_year,times_sec))+geom_step()+geom_vline(xintercept=1944.583,col='green')+annotate('text',label=wr_1944_name,x=1935,y=240,col='blue')+geom_vline(xintercept=1998.583,col='green')+annotate('text', x=1985,y=240,col='blue',label=wr_1998_name)+ geom_segment(x = 1998.583, xend = 2015, y = wr_1998, yend = wr_1998)
 
 # Q5. Now we are ready to add other contextual information.
 # Remake the plot as before but now adding axis labels and a title.
 # This is the FINAL version of the plot of world record times.
 # Hint : labs()
+ggplot(wr1500m,aes(new_year,times_sec))+geom_step()+geom_vline(xintercept=1944.583,col='green')+annotate('text',label=wr_1944_name,x=1935,y=240,col='blue')+geom_vline(xintercept=1998.583,col='green')+annotate('text', x=1985,y=240,col='blue',label=wr_1998_name)+xlab('Year')+ylab('Time in Seconds')+ggtitle('1500m World Records')+ geom_segment(x = 1998.583, xend = 2015, y = wr_1998, yend = wr_1998)
 
 # Your ggplot commands
 
@@ -179,7 +190,7 @@ load("SummerOlympics2012Ctry.rda")
 # the number of medals. 
 
 # To begin, make a plot of GDP against population. Your ggplot command:
-
+ggplot(SO2012Ctry,aes(pop,GDP))+geom_point()
 
 #Q7. Let's examine GDP per person (create this new variable yourself)
 # and population.
@@ -193,8 +204,10 @@ load("SummerOlympics2012Ctry.rda")
 # symbols( your code here )
 
 # Your ggplot command
-
-
+GDP_per_person=(SO2012Ctry$GDP)/(SO2012Ctry$pop)
+SO2012Ctry$GDP_per_person=GDP_per_person
+symbols(x=SO2012Ctry$pop,y=SO2012Ctry$GDP_per_person,circles=SO2012Ctry$Total,log='xy',xlim=c(100,1e12), ylim=c(10,1e8))
+ggplot(SO2012Ctry,aes(pop,GDP_per_person))+geom_point(aes(size=Total))+scale_x_log10()+scale_y_log10()+scale_size('Total')
 # We skip Q8 this time the plot above is already fine.
 # Q8. It appears that the countries with no medals are circles too....
 
@@ -204,7 +217,8 @@ load("SummerOlympics2012Ctry.rda")
 # Hint: use annotate(), geom_text(), maybe other functions.
 
 # Your ggplot command:
-
+top5=order(-SO2012Ctry$Total)[1:5]
+ggplot(SO2012Ctry,aes(pop,GDP_per_person,))+geom_point(aes(size=Total),col='blue')+scale_x_log10()+scale_y_log10()+scale_size('Total')+xlab('pop')+ylab('GDP Per Person')+ggtitle('Total Medals Won by Countries in 2012 Summer Olympics by Population and GDP')+annotate("text", x = SO2012Ctry[,'pop'][top5], y = SO2012Ctry[,'GDPPP'][top5], label= SO2012Ctry[,'Country'][top5])
 ######################################
 # PLOT 3.
 # Plotting points on maps can help us see geographic relationships
@@ -215,7 +229,7 @@ library("maps")
 # Hint: look at map_data() and geom_polygon() in the ggplot2 manual.
 
 # Your ggplot commands:
-
+map_data('world')
 
 # Q11. Now add circles to the map where
 # the circles are proportional in area to the number of medals
@@ -259,7 +273,7 @@ load("London2012ALL_ATHLETES.rda")
 # find the option that allows you to put bars side-by-side (study the manual page)
 
 # make barplot with ggplot
-
+ggplot(athletes,aes(Sport,fill=Sex))+geom_bar(position="dodge")
 
 ## Skip this question...
 #Q15. Remake the barplot above...
@@ -273,7 +287,7 @@ load("London2012ALL_ATHLETES.rda")
 # Lastly, add a title to the plot.
 
 # Your ggplot commands
-
+ggplot(athletes,aes(Sport,fill=Sex))+geom_bar(position="dodge")+theme(axis.text.x=element_text(angle=90))+ggtitle('Sex Participation in Olympics Sports of 2012 Summer Olympics')
 
 # This was the final version of the 4th plot.
 
@@ -287,7 +301,7 @@ load("rainfallCO.rda")
 
 # Create a variable 
 # max.rain : a vector of length 5 with the maximum rainfall at each station
-
+max.rain
 # Create a variable 
 # mean.rain : a vector of length 5 with the average rainfall at each station
 
