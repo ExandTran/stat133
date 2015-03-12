@@ -218,7 +218,7 @@ ggplot(SO2012Ctry,aes(pop,GDP_per_person))+geom_point(aes(size=Total))+scale_x_l
 
 # Your ggplot command:
 top5=order(-SO2012Ctry$Total)[1:5]
-ggplot(SO2012Ctry,aes(pop,GDP_per_person,))+geom_point(aes(size=Total),col='blue')+scale_x_log10()+scale_y_log10()+scale_size('Total')+xlab('pop')+ylab('GDP Per Person')+ggtitle('Total Medals Won by Countries in 2012 Summer Olympics by Population and GDP')+annotate("text", x = SO2012Ctry[,'pop'][top5], y = SO2012Ctry[,'GDPPP'][top5], label= SO2012Ctry[,'Country'][top5])
+ggplot(SO2012Ctry,aes(pop,GDP_per_person,))+geom_point(aes(size=Total),col='orange')+scale_x_log10()+scale_y_log10()+scale_size('Total')+xlab('pop')+ylab('GDP Per Person')+ggtitle('Total Medals Won by Countries in 2012 Summer Olympics by Population and GDP')+annotate("text", x = SO2012Ctry[,'pop'][top5], y = SO2012Ctry[,'GDPPP'][top5], label= SO2012Ctry[,'Country'][top5])
 ######################################
 # PLOT 3.
 # Plotting points on maps can help us see geographic relationships
@@ -229,8 +229,8 @@ library("maps")
 # Hint: look at map_data() and geom_polygon() in the ggplot2 manual.
 
 # Your ggplot commands:
-map_data('world')
-
+world=map_data('world')
+ggplot(world,aes(long,lat, group=group))+ geom_polygon(color='black',fill='light grey')
 # Q11. Now add circles to the map where
 # the circles are proportional in area to the number of medals
 # won by the country. 
@@ -240,7 +240,11 @@ map_data('world')
 # Hint: look at the function [geom_point()] and the parameters [aes] and [size]
 
 # wonMedal <- your code here
-
+wonMedal=SO2012Ctry[SO2012Ctry$Total>0,]
+wonMedal$group=1:nrow(wonMedal)
+ggplot(world,aes(long,lat, group=group))+ 
+  geom_polygon(color='grey90',fill='grey40')+
+  geom_point(data=wonMedal,aes(x=longitude,y=latitude,size=Total),colour='gold')
 # Your ggplot commands here.
 
 ## Not needed
@@ -301,17 +305,17 @@ load("rainfallCO.rda")
 
 # Create a variable 
 # max.rain : a vector of length 5 with the maximum rainfall at each station
-max.rain
+max.rain=lapply(rain,max)
 # Create a variable 
 # mean.rain : a vector of length 5 with the average rainfall at each station
-
+mean.rain=lapply(rain,mean)
 
 # Create a variable 
 # sd.rain : a vector of length 5 with the standard deviation of the rainfall at each station
-
+sd.rain=lapply(rain,sd)
 # Create a variable 
 # n1989.rain : a vector of length 5 with the number of measurements at each station in the year 1989 (use [day])
-
+n1989=lapply(day,length)
 
 
 
