@@ -7,8 +7,9 @@
 # variables <mean.age> and <med.age> respectively.
 
 # mean.age <- your code here
+mean.age=mean(family$age)
 # med.age <- your code here
-
+med.age=median(family$age)
 
 # For each person in the dataset, calculate the squared difference between its
 # height and the mean height of the family. Store this as the variable
@@ -16,7 +17,7 @@
 # the number of observations in the dataset
 
 # height.diffs <- your code here
-
+height.diffs=(family$height-mean(family$height))^2
 
 
 # Please create the following two data frames and store them with the indicated names:
@@ -24,14 +25,16 @@
 # 2) people whose age is less than or equal to <mean.age>: <ppl.young>
 
 # ppl.old <- your code here
+ppl.old=family[family$age>mean.age,]
 # ppl.young <- your code here
-
+ppl.young=family[family$age<=mean.age,]
 # For each of your subsets, create a vector giving the weight of each person. Name
 # these variables <ppl.old.weight> and <ppl.young.weight>.
 
 # ppl.old.weight <- your code here
+ppl.old.weight=ppl.old$weight
 # ppl.young.weight <- your code here
-
+ppl.young.weight=ppl.young$weight
 
 # Please implement the function bmiByheight. Your function should take the
 # following arguments:
@@ -46,9 +49,10 @@
 # <height> in the range (inclusive) specified by <height.range>
 
 bmiByheight <- function(height.range, height, bmi) {
-  
-  # your code here
-  
+  minimum=height.range[1]
+  maximum=height.range[2]
+  if (length(height) != length(bmi)) stop("height and bmi must have the same length")
+  mean(bmi[height >= minimum & height <= maximum])
 }
 
 
@@ -57,4 +61,5 @@ bmiByheight <- function(height.range, height, bmi) {
 # 1) a title "BMI vs Age"
 # 2) axis labels: "BMI" and "Age (Year)"
 # 3) a blue line with intercept= 22.89050 and slope= 0.03501
-
+plot(x=family$age,y=family$bmi,xlab="BMI",ylab="Age (Year)",main="BMI vs Age")
+abline(a=22.89050,b=0.03501,col="blue")
