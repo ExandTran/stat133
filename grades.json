@@ -19,5 +19,6 @@
     "login": "ExandTran", 
     "name": "Alex Tran", 
     "status": "enrolled", 
-    "url": "git@github.com:ExandTran/stat133.git"
+    "url": "git@github.com:ExandTran/stat133.git", 
+    "section": "lab5"
 }
