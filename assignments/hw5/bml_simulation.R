@@ -10,7 +10,7 @@ lst.simulations=c()
 simulation <- function(r,c,p){
   n=1
   lst=c()
-  while (n<2){
+  while (n<200){
     a=bml.sim(r,c,p)
     if (a>9999){
       
@@ -22,7 +22,9 @@ simulation <- function(r,c,p){
   return(mean(lst))
 }
 sim.density.study=
-  c(
+  data.frame(
+    density=c(0.3,0.5,0.6,0.7,0.8,1.0),
+    steps=c(
     simulation(10,10,.3),
     simulation(10,10,.5),
     simulation(10,10,.6),
@@ -30,6 +32,7 @@ sim.density.study=
     simulation(10,10,.8),
     simulation(10,10,1.0)
     )
+  )
 #.3=0
 #.5=1206.94
 #.6=74.61
@@ -37,18 +40,24 @@ sim.density.study=
 #.8=15.583
 #1.0=1
 sim.grid.size.study=
-  c(
+  data.frame(
+    size=c(5,10,15,20,25),
+    steps=c(
     simulation(5,5,.6),
     simulation(10,10,.6),
     simulation(15,15,.6),
     simulation(20,20,.6),
     simulation(25,25,.6)
     )
+  )
+    
 #5=15.81
 #10=78.15
 #15=67.30
 #20=80.31
 #25=92.14
-lst.simulations=c(sim.density.study,sim.grid.size.study)
+lst.simulations=list(sim.density.study,sim.grid.size.study)
+plot(lst.simulations[[1]],pch=20,main="The Effect of Density on the Amount of Steps Before Gridlock")
+plot(lst.simulations[[2]],pch=20,main="The Effect of Grid Size on the Amount of Steps Before Gridlock")
 
 save(lst.simulations,file="simulation.rda")
