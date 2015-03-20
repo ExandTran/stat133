@@ -28,6 +28,24 @@
 #                 non-adopter, else 1 (so once a row turns to 1 it stays as 1).
 
 sim.doctors <- function(initial.doctors, n.doctors, n.days, p){
+  m=matrix(
+    sample(initial.doctors,n.doctors),
+    ncol=n.days,
+    nrow=n.doctors
+  )
+  for (i in 2:n.days){
+    a=sample(1:n.doctors,2)
+    b=m[a,i]
+    if (1 %in% b & 0 %in% b){
+      c=sample(0:1,1,prob=c(1-p,p))
+      if (c==1){
+        m[a[1],i:n.days]=1
+        m[a[2],i:n.days]=1
+      }
+    }  
+  }
+  return(m)
+}
 
   # Set up the output variable, define it as a matrix then use initial.doctors
   # to set the first column (day)
@@ -39,7 +57,6 @@ sim.doctors <- function(initial.doctors, n.doctors, n.days, p){
 
   # return the output
 
-}
 
 # When you test your function you have to generate <initial.doctors> and
 # pick values for the other input parameters.
@@ -50,4 +67,19 @@ set.seed(42)
 # on x-axis: days,
 # on y-axis : the number of doctors that have already adopted the drug, on that day
 # Put all 5 lines in one figure (e.g. use first plot() then lines() for the subsequent lines)
+initial.doctors=c(rep(1,100),rep(0,900))
+n.doctors=1000
+n.days=2500
+test=list(
+  sim.doctors(initial.doctors,n.doctors,n.days,.2),
+  sim.doctors(initial.doctors,n.doctors,n.days,.4),
+  sim.doctors(initial.doctors,n.doctors,n.days,.6),
+  sim.doctors(initial.doctors,n.doctors,n.days,.8),
+  sim.doctors(initial.doctors,n.doctors,n.days,1)
+  )
 
+plot(x=1:n.days,y=colSums(test[[1]]),type="l",col="red",main="Number of Doctors that Adopted the New Drug in 2500 Days",xlab="Number of Days",ylab="Number of Doctors")
+lines(x=1:n.days,y=colSums(test[[2]]),col="blue")
+lines(x=1:n.days,y=colSums(test[[3]]),col="green")
+lines(x=1:n.days,y=colSums(test[[4]]),col="black")
+lines(x=1:n.days,y=colSums(test[[5]]),col="orange")
