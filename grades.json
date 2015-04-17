@@ -14,6 +14,19 @@
                     "earned": 16
                 }
             }
+        }, 
+        "hw4": {
+            "note": "", 
+            "hash": "8cd64c72fe832bd2bd184d912cbf29029ce6a6e0", 
+            "earned": 16, 
+            "possible": 20, 
+            "penalty": 0, 
+            "parts": {
+                "hw4": {
+                    "possible": 20, 
+                    "earned": 16
+                }
+            }
         }
     }, 
     "login": "ExandTran", 
