@@ -18,8 +18,16 @@ genBootY = function(x, y, rep = TRUE){
   ### Return a vector of random y values the same length as y
   ### You can assume that the xs are sorted
   ### Hint use tapply here!
-  
-
+  lst=c()
+  i=x[1]
+  k=0
+  while (k<length(x)){
+    len=length(x[x==i])
+    lst=append(lst, y[tapply(x[(k+1):(k+len)],y[(k+1):(k+len)])])
+    i=x[len+1]
+    k=k+len
+  }
+  return(lst)
 }
 
 genBootR = function(fit, err, rep = TRUE){
