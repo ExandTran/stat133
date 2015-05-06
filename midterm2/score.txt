@@ -1,0 +1,10 @@
+y  -1
+w: wrong permutation  -1
+t  -2
+f3 -1
+boxplot  -2
+line 114: use color option -1
+line 120 -3
+cache: use apply functions as instructed  -1
+
+Score: 21/33
