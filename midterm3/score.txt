@@ -1,0 +1,17 @@
+Total: 19/20
+
+Function 1
+5/5
+
+Function 2
+5/5
+
+Function 3
+4/5
+missing library(“stringer”). Also be careful in the final because
+it is not guaranteed to that you will have access to all libraries 
+you might like to use.
+
+Function 4
+5/5
+
