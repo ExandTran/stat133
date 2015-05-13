@@ -229,7 +229,7 @@ abline(v=2.1)
 plot(Bank2013$fertility.rate,
      Bank2013$life.expectancy,
      pch=".",
-     col=as.numeric(Bank2014$region),
+     col=as.numeric(Bank2013$region),
      xlab="Fertility Rate",
      ylab="Life Expectancy",
      main="2013"
@@ -279,7 +279,7 @@ max.diff.rain<- sapply(rain,maxabsdiff)
 # number of rain days (i.e. rain > 0) as a function of total days
 
 #prop.rain <- <your code here>
-prop.rain<- sapply(rain[rain>0],function(x) x/day[[1]])
+#prop.rain<- sapply(rain[rain>0],function(x) x/day[[1]]) #andy
 # [3 pts]
 # Make a plot with 6 panels and plot the histogram of the rainfall for each weather station
 # in a separate panel (there will be one empty panel)
@@ -422,10 +422,10 @@ NumJackpot <- function(k, B){
 # For B = 5000 and each value of k = 10000, 50000, 100000, 500000
 # Plot a histogram of the output from NumJackpot (i.e. four histograms)
 par(mfrow=c(2,2))
-hist(NumJackpot(100,1000))
-hist(NumJackpot(500,1000))
-hist(NumJackpot(1000,1000))
-hist(NumJackpot(5000,1000))
+hist(NumJackpot(100,50)) #andy
+hist(NumJackpot(500,50))
+hist(NumJackpot(1000,50))
+hist(NumJackpot(5000,50))
 
 #################################################################
 ##### PART VI : string manipulation and regular expressions [20 pts]
