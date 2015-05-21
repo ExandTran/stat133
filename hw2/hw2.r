@@ -51,6 +51,7 @@
 # the hw3 directory in the file WR1500MeterMen.rda.
 
 # load the data
+load("WR1500MeterMen.rda")
 
 # The name of the object loaded is wr1500m
 # The time (in the column "times") in these data are recorded in seconds, 
@@ -145,9 +146,9 @@ wr_1944_name= levels(factor(wr1500m[,'athlete'][match(1944, wr1500m[,'year'])]))
 wr_1998_name= levels(factor(wr1500m[,'athlete'][match(1998, wr1500m[,'year'])]))
 abline(v=1944.583)
 abline(v=1998.583)
-text(x=1944.583,240,wr_1944,pos=2)
+text(x=1944.583,240,wr_1944_name,pos=2)
 text(x=1998.583,240,wr_1998_name,pos=2)
-
+wr_1944 <- wr_1944_name
 # Q5. Now we are ready to add other contextual information.
 # Remake the plot as before but now adding axis labels and a title.
 # This is the FINAL version of the plot of world record times.
